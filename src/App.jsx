@@ -1,19 +1,12 @@
-import { useState } from 'react';
-import UserForm from './components/UserForm';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import UserFormPage from './pages/UserFormPage';
 
 function App() {
-  const [submittedUser, setSubmittedUser] = useState(null);
-
   return (
-    <main className="page">
-      <UserForm onSubmit={setSubmittedUser} />
-
-      {submittedUser && (
-        <p className="success" role="status">
-          Gửi thông tin thành công cho {submittedUser.name}!
-        </p>
-      )}
-    </main>
+    <Routes>
+      <Route path="/" element={<Navigate to="/user-form" replace />} />
+      <Route path="/user-form" element={<UserFormPage />} />
+    </Routes>
   );
 }
 

@@ -1,3 +1,8 @@
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 
 function UserForm({ onSubmit }) {
@@ -7,79 +12,81 @@ function UserForm({ onSubmit }) {
     formState: { errors },
   } = useForm();
 
+  const nameField = register('name', {
+    required: 'Vui lòng nhập tên.',
+  });
+
+  const emailField = register('email', {
+    required: 'Vui lòng nhập email.',
+    pattern: {
+      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      message: 'Email không đúng định dạng.',
+    },
+  });
+
+  const ageField = register('age', {
+    required: 'Vui lòng nhập tuổi.',
+    valueAsNumber: true,
+    min: {
+      value: 18,
+      message: 'Tuổi phải từ 18 đến 65.',
+    },
+    max: {
+      value: 65,
+      message: 'Tuổi phải từ 18 đến 65.',
+    },
+  });
+
   return (
-    <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-      <h1>Thông tin người dùng</h1>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Stack spacing={2.5}>
+        <Typography component="h1" variant="h5">
+          Thông tin người dùng
+        </Typography>
 
-      <div className="field">
-        <label htmlFor="name">Tên</label>
-        <input
+        <TextField
           id="name"
-          type="text"
-          aria-invalid={Boolean(errors.name)}
-          aria-describedby={errors.name ? 'name-error' : undefined}
-          {...register('name', {
-            required: 'Vui lòng nhập tên.',
-          })}
+          label="Tên"
+          fullWidth
+          error={Boolean(errors.name)}
+          helperText={errors.name?.message}
+          name={nameField.name}
+          onChange={nameField.onChange}
+          onBlur={nameField.onBlur}
+          inputRef={nameField.ref}
         />
-        {errors.name && (
-          <p id="name-error" className="error" role="alert">
-            {errors.name.message}
-          </p>
-        )}
-      </div>
 
-      <div className="field">
-        <label htmlFor="email">Email</label>
-        <input
+        <TextField
           id="email"
+          label="Email"
           type="email"
-          aria-invalid={Boolean(errors.email)}
-          aria-describedby={errors.email ? 'email-error' : undefined}
-          {...register('email', {
-            required: 'Vui lòng nhập email.',
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: 'Email không đúng định dạng.',
-            },
-          })}
+          fullWidth
+          error={Boolean(errors.email)}
+          helperText={errors.email?.message}
+          name={emailField.name}
+          onChange={emailField.onChange}
+          onBlur={emailField.onBlur}
+          inputRef={emailField.ref}
         />
-        {errors.email && (
-          <p id="email-error" className="error" role="alert">
-            {errors.email.message}
-          </p>
-        )}
-      </div>
 
-      <div className="field">
-        <label htmlFor="age">Tuổi</label>
-        <input
+        <TextField
           id="age"
+          label="Tuổi"
           type="number"
-          aria-invalid={Boolean(errors.age)}
-          aria-describedby={errors.age ? 'age-error' : undefined}
-          {...register('age', {
-            required: 'Vui lòng nhập tuổi.',
-            valueAsNumber: true,
-            min: {
-              value: 18,
-              message: 'Tuổi phải từ 18 đến 65.',
-            },
-            max: {
-              value: 65,
-              message: 'Tuổi phải từ 18 đến 65.',
-            },
-          })}
+          fullWidth
+          error={Boolean(errors.age)}
+          helperText={errors.age?.message}
+          name={ageField.name}
+          onChange={ageField.onChange}
+          onBlur={ageField.onBlur}
+          inputRef={ageField.ref}
         />
-        {errors.age && (
-          <p id="age-error" className="error" role="alert">
-            {errors.age.message}
-          </p>
-        )}
-      </div>
 
-      <button type="submit">Gửi thông tin</button>
-    </form>
+        <Button type="submit" variant="contained">
+          Gửi thông tin
+        </Button>
+      </Stack>
+    </Box>
   );
 }
 

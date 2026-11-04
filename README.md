@@ -1,5 +1,9 @@
 # Bài tập React Hook Form
 
+Dự án sử dụng React Hook Form để quản lý form và Material UI (MUI) cho các thành phần giao diện.
+
+Trang form nằm tại route `/user-form`. Khi truy cập `/`, React Router sẽ tự chuyển hướng tới trang này.
+
 Form gồm ba trường:
 
 - Tên: bắt buộc.
